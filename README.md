@@ -1,5 +1,5 @@
 <h1 align="center">
-  🗣️ CrypTwitter
+  💠 CrypTwitter 💠
 </h1>
 
 <h4 align="center">
