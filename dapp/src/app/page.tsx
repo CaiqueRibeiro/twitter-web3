@@ -1,5 +1,8 @@
+"use client"
 import Image from 'next/image'
+import { useState } from 'react'
 import { Twitter } from 'lucide-react'
+import { doLogin } from '../services/Web3Service'
 
 
 function LogoContainer() {
@@ -11,6 +14,18 @@ function LogoContainer() {
 }
 
 function LoginSection() {
+  const [message, setMessage] = useState("")
+
+  function handleLogin() {
+    setMessage('Connecting to MetaMask. Please wait')
+    doLogin()
+      .then(wallet => {
+        setMessage(wallet)
+      })
+      .catch(error => setMessage(error))
+  }
+
+
   return (
     <div className="text-white flex-1 pl-8 border-l-2 border-slate-400">
       <h1 className="font-black text-9xl mb-6">CrypTwitter</h1>
@@ -18,10 +33,29 @@ function LoginSection() {
       <span className="text-xl">Auth with your crypto wallet. Post your messages. All in Blockchain.</span>
 
       <div>
-        <button className='flex items-center justify-center w-96 px-3 mt-8  bg-sky-500 rounded-full gap-5 transition ease-in-out hover:bg-sky-600 duration-200'>
+        <button
+          type='button'
+          className='
+        flex
+        items-center
+        justify-center
+        w-96
+        px-3
+        mt-8
+        bg-sky-500
+        rounded-full
+        gap-5
+        transition
+        ease-in-out
+        hover:bg-sky-600
+        duration-200'
+          onClick={handleLogin}
+        >
+
           <Image src="metamask.svg" width="64" height="64" alt="MetaMask logo" />
           <span className='text-white text-xl'>Connect to MetaMask</span>
         </button>
+        <p className="text-red-500 ml-3">{message}</p>
       </div>
     </div>
   )
