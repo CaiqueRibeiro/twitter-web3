@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Twitter } from 'lucide-react'
 import { doLogin } from '../services/Web3Service'
+import { useRouter } from 'next/navigation'
 
 
 function LogoContainer() {
@@ -14,15 +15,14 @@ function LogoContainer() {
 }
 
 function LoginSection() {
+  const { push } = useRouter()
   const [message, setMessage] = useState("")
 
   function handleLogin() {
     setMessage('Connecting to MetaMask. Please wait')
     doLogin()
-      .then(wallet => {
-        setMessage(wallet)
-      })
-      .catch(error => setMessage(error))
+      .then(wallet => push("/timeline"))
+      .catch(error => setMessage(error.message))
   }
 
 
@@ -63,7 +63,7 @@ function LoginSection() {
 
 export default function Home() {
   return (
-    <div className="flex p-5 min-h-screen items-center justify-between">
+    <div className="flex p-5 min-h-screen items-center justify-between flex-1">
       <LogoContainer />
       <LoginSection />
     </div>
