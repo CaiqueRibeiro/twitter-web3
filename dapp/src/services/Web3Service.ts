@@ -1,7 +1,7 @@
-import Web3 from 'web3'
+import Web3, { MatchPrimitiveType } from 'web3'
 import { ABI } from './ABI'
 
-const CONTRACT_ADDRESS = '0xC15eEA3852Daf24e368a2A38c58d29eF92c09A10'
+const CONTRACT_ADDRESS = '0x49bd18556dB648739b7D681Ee5Ff7da55bBffb55'
 
 export async function doLogin() {
   if (!window.ethereum) throw new Error('No MetaMask Found')
@@ -31,4 +31,10 @@ export async function addTweet(text: string) {
 export async function changeUserName(newName: string) {
   const contract = getContract()
   return contract.methods.changeUsername(newName).send()
+}
+
+export async function getLastTweets(page: number = 1) {
+  const contract = getContract()
+  const tweets = await contract.methods.getLastTweets(page).call()
+  return tweets.map(tweet => { return { ...tweet }}).filter(tweet => tweet.text !== '')
 }

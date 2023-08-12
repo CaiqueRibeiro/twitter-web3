@@ -21,7 +21,7 @@ export default function RootLayout({
         <title>CrypTwitter | Login</title>
         <meta charSet='utf-8' />
       </Head>
-      <body className={`${inter.className} min-h-screen bg-black flex justify-center`}>{children}</body>
+      <body className={`${inter.className} h-screen bg-black flex justify-center`}>{children}</body>
     </html>
   )
 }

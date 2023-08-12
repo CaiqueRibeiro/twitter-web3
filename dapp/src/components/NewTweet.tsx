@@ -1,8 +1,12 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { addTweet } from '@/services/Web3Service'
 
-export default function NewTweet() {
+interface NewTweetProps {
+  refreshList: (input: boolean) => void;
+}
+
+export default function NewTweet({ refreshList }: NewTweetProps) {
   const [text, setText] = useState('')
   const [message, setMessage] = useState('')
 
@@ -11,13 +15,14 @@ export default function NewTweet() {
     addTweet(text)
       .then(result => {
         setText('')
-        setMessage('Tweet registered. Wait a little bit till it appear')
+        setMessage('')
+        refreshList(true)
       })
       .catch(error => setMessage(error.message))
   }
 
   return (
-    <div className="bg-zinc-800 p-8 h-96 rounded-md flex-1">
+    <div className="bg-zinc-800 p-8 rounded-md">
       <h2 className="font-bold text-5xl mb-8">Welcome back!</h2>
       <span className="text-xl">What is happening?</span>
       <div className='flex py-1'>
@@ -31,6 +36,7 @@ export default function NewTweet() {
       py-3
       flex
       gap-3
+      h-44
       focus-within:bg-transparent
       focus-within:border-sky-700"
         >
